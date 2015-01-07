@@ -1,0 +1,57 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      eDensity;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 -3 0 0 0 0 0];
+
+internalField   uniform 1.e4;
+
+boundaryField
+{
+    anode
+    {
+/*        type          fixedValue;
+		value			uniform 0; */
+
+		type            	groovyBCFixedValue;
+		valueExpression 	"eDensityBoundaryCondition";
+		value 				uniform 1.e4;
+
+		//variables "eDensityAnode@anode=sum(diffusiveFlux/eVelocity*mag(Sf()))/sum(mag(Sf()));";
+
+    	//valueExpression "sum(diffusiveFlux*mag(Sf()))/eVelocity*sum(mag(Sf()))";
+
+      //value           nonuniform (diffusiveFlux/eVelocity);
+		
+
+    }
+
+    cathode
+    {
+//		type				zeroGradient;
+
+
+        type            	groovyBCFixedValue;
+		valueExpression		"eDensityBoundaryCondition";
+		value				uniform 1.e4;
+    }
+
+    otherFaces
+    {
+        type            	empty;
+    }
+}
+
+// ************************************************************************* //

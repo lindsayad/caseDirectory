@@ -1,1 +1,1 @@
-Development folder for input files related to modelling of streamer discharges.
+Development folder for input files related to modelling of streamer discharges in OpenFOAM.

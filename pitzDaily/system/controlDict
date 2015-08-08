@@ -10,57 +10,41 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      blockMeshDict;
+    location    "system";
+    object      controlDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-convertToMeters 1.0;
+application     scalarTransportFoam;
 
-vertices
-(
- (0 0 0) // 0
- (5e-2 0 0) // 1
- (5e-2 1 0) // 2
- (0 1 0) // 3
- (0 0 1) // 4 
- (5e-2 0 1) // 5
- (5e-2 1 1) // 6
- (0 1 1) // 7
-);
+startFrom       startTime;
 
-blocks
-(
-    hex (0 1 2 3 4 5 6 7) 
-    (100 1 1) 
-    simpleGrading (1 1 1)
-);
+startTime       0;
 
-edges
-(
-);
+stopAt          endTime;
 
-boundary
-(
-    left
-    {
-        type patch;
-        faces
-        (
-	 (0 4 7 3)
-        );
-    }
-    right
-    {
-        type patch;
-        faces
-        (
-            (2 6 5 1)
-        );
-    }
-);
+endTime         10.0;
 
-mergePatchPairs
-(
-);
+deltaT          0.1;
+
+writeControl    runTime;
+
+writeInterval   0.1;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+libs ( "libgroovyBC.so" ) ;
 
 // ************************************************************************* //

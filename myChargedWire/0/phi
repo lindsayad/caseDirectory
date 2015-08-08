@@ -20,36 +20,16 @@ internalField   uniform 0;
 
 boundaryField
 {
-    left
+  left
     {
-        type            symmetryPlane;
+        type            fixedValue;
+        value           uniform -1000;
     }
 
-    right
-    {
-        type            symmetryPlane;
-    }
-
-    down
-    {
-        type            symmetryPlane;
-    }
-
-    up
+  right
     {
         type            fixedValue;
         value           uniform 0;
-    }
-
-    hole
-    {
-        type            fixedValue;
-        value           uniform 45000;
-    }
-
-    defaultFaces
-    {
-        type            empty;
     }
 }
 

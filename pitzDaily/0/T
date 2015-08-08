@@ -9,58 +9,52 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      blockMeshDict;
+    class       volScalarField;
+    object      T;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-convertToMeters 1.0;
+dimensions      [0 0 0 1 0 0 0];
 
-vertices
-(
- (0 0 0) // 0
- (5e-2 0 0) // 1
- (5e-2 1 0) // 2
- (0 1 0) // 3
- (0 0 1) // 4 
- (5e-2 0 1) // 5
- (5e-2 1 1) // 6
- (0 1 1) // 7
-);
+internalField   uniform 0;
 
-blocks
-(
-    hex (0 1 2 3 4 5 6 7) 
-    (100 1 1) 
-    simpleGrading (1 1 1)
-);
-
-edges
-(
-);
-
-boundary
-(
-    left
+boundaryField
+{
+    inlet
     {
-        type patch;
-        faces
-        (
-	 (0 4 7 3)
-        );
+        type            fixedValue;
+        value           uniform 1;
     }
-    right
-    {
-        type patch;
-        faces
-        (
-            (2 6 5 1)
-        );
-    }
-);
 
-mergePatchPairs
-(
-);
+    outlet
+    {
+	 type			 groovyBC;
+	 variables		 "f=1/(1+1/(mag(delta())));";
+	 valueExpression	 "0";
+	 gradientExpression	 "0";
+	 fractionExpression	 "f";
+	 value			 uniform 0;
+    }
+    // outlet
+    // {
+    //     type            fixedValue;
+    // 	value           uniform 0; 
+    // }
+
+    // upperWall
+    // {
+    //     type            zeroGradient;
+    // }
+
+    // lowerWall
+    // {
+    //     type            zeroGradient;
+    // }
+
+    // frontAndBack
+    // {
+    //     type            empty;
+    // }
+}
 
 // ************************************************************************* //
